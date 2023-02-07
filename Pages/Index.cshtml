@@ -41,6 +41,12 @@
                 <div class="table-wrap">
                     <form method="post">
                         <table class="table">
+                            <colgroup>
+                                <col width="50%" />
+                                <col width="16%" />
+                                <col width="15%" />
+                                <col style="align-items:center" width="19%"/>
+                            </colgroup>
                             <thead class="thead-primary">
                                 <tr>
                                     <th>File Name</th>
@@ -48,6 +54,7 @@
                                     <th>Size</th>
                                     <th>Actions</th>
                                 </tr>
+                                
                             </thead>
                             <tbody>
                                 @foreach (var file in Model.TorrentFiles)

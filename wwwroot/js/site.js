@@ -4,7 +4,9 @@ function getMagnet(magnetLink) {
     $(document).ready(function () {
         var client = new WebTorrent();
         if (magnetLink != '') {
-            client.add(magnetLink, displayTorrentFiles);
+            client.add(magnetLink, function (torrent) {
+                displayTorrentFiles(torrent);
+            });
         }
     }); 
    
