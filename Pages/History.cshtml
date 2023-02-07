@@ -1,0 +1,22 @@
+﻿@page
+@model TorrentStreamer.Pages.HistoryModel
+@{
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>File Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var file in Model.TorrentFiles)
+        {
+            <tr>
+                <td>@file.Name</td>
+                <td>@file.Length</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
