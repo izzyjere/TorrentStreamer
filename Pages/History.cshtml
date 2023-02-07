@@ -3,29 +3,41 @@
 @{
     ViewData["Title"] = "File History||Torrent Streamer";
 }
-<form method="post">
-    <table class="table table-hover table-striped">
-        <thead>
-            <tr>
-                <th>File Name</th>
-                <th>Date Added</th>
-                <th>File Size</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var file in Model.TorrentFiles)
-            {
-                <tr>
-                    <td>@file.FileName</td>
-                    <td>@file.DateAdded.ToString("dd/MM/yyyy H:mm")</td>
-                    <td>@file.FileSize</td>
-                    <td>
-                        <button class="btn btn-primary">Stream</button>
-                        <button type="submit" class="btn btn-danger" asp-page-handler="Delete" asp-route-id="@file.Id">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</form>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="text-center mb-4">Previously Uploaded Torrents </h4>
+                <div class="table-wrap">
+                    <form method="post">
+                        <table class="table">
+                            <thead class="thead-primary">
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>File Size</th>
+                                    <th>Date Uploaded</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var file in Model.TorrentFiles)
+                                {
+                                    <tr>
+                                        <td>@file.FileName</td>
+                                        <td>@file.DateAdded.ToString("dd/MM/yyyy H:mm")</td>
+                                        <td>@((file.FileSize / 1024).ToString("N1")) Kb</td>
+                                        <td class="border-bottom-0">
+                                            <a asp-page="./Stream" asp-route-id="@file.Id" class="btn btn-primary">Stream</a>
+                                            <button type="submit" class="btn btn-danger" asp-page-handler="Delete" asp-route-id="@file.Id">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

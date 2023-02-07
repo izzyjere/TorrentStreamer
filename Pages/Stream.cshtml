@@ -1,0 +1,11 @@
+﻿@page
+@model TorrentStreamer.Pages.StreamModel
+@{
+    ViewData["Title"] = $"Steam|{Model.TorrentFile.FileName}";
+}
+<main>
+    <div id="resultsContainer" class="container mt-3"></div>
+    <section id="playerContainer" class="container mt-3" style="display: none;">
+        <video id="player" controls class="w-100"></video>
+    </section>
+</main>
