@@ -7,9 +7,11 @@ namespace TorrentStreamer.Pages
     public class StreamModel : PageModel
     {
         readonly TorrentContext db;
-        public StreamModel(TorrentContext _db)
+        readonly IWebHostEnvironment _env;
+        public StreamModel(TorrentContext _db, IWebHostEnvironment env)
         {
-            db= _db;
+             db = _db;
+            _env = env;
         }
         public TorrentFile TorrentFile { get; set; } = new();
         public async Task<IActionResult> OnGetAsync(Guid id)
@@ -26,5 +28,7 @@ namespace TorrentStreamer.Pages
             TorrentFile = record;   
             return Page();
         }
+     
+        
     }
 }

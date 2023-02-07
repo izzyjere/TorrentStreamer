@@ -4,14 +4,35 @@
     ViewData["Title"] = "Home||Torrent Streamer";
 }
 <header class="d-flex justify-content-center mt-5">
-    <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
-        <div class="form-group">
+    
+        @*<div class="form-group">
             <input type="file" name="torrentFile" accept=".torrent" />
             <button type="submit" class="btn btn-primary">Upload</button>
+        </div>*@
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+                    <div class="form-group">
+                        <label for="fileInput">Upload Torrent File:</label>
+                        <input type="file" name="torrentFile" accept=".torrent" class="form-control mb-3" id="fileInput">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                    </form>
+                </div>
+                <form method="post">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="magnetLinkInput">Enter Magnet Link:</label>
+                        <input required asp-for="@Model.MagnetUrl" type="text" class="form-control mb-3" id="magnetLinkInput">
+                        <button type="submit" class="btn btn-primary" asp-page-handler="AddMagnet">Add</button>
+                    </div>
+                </div>
+            </form>
+            </div>
         </div>
-    </form>
+   
 </header>
-
 <section class="ftco-section">
     <div class="container">
         <div class="row">

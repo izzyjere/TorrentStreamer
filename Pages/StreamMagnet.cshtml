@@ -1,13 +1,13 @@
 ﻿@page
-@model TorrentStreamer.Pages.StreamModel
+@model TorrentStreamer.Pages.StreamMagnetModel
 @{
-    ViewData["Title"] = $"Steam|{Model.TorrentFile.FileName}";
+    ViewData["Title"] = "Torrent Streamer || Magnet";
 }
 <section class="ftco-section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <button onclick="displayTorrent('@Model.TorrentFile.Id')" class="btn btn-success mb-4">Display Files</button>
+                <button onclick="getMagnet('@Model.MagnetUrl')" class="btn btn-success mb-4">Display Files</button>
                 <div id="torrent-files">
                     <div class="table-wrap">
                         <table class="table">

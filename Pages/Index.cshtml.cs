@@ -9,11 +9,16 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
     private readonly TorrentContext db;
     public IEnumerable<TorrentFile> TorrentFiles { get; set; } = Enumerable.Empty<TorrentFile>();
-
+    [BindProperty]
+    public string MagnetUrl { get; set; }
     public IndexModel(ILogger<IndexModel> logger, TorrentContext db)
     {
         _logger = logger;
         this.db = db;
+    }
+    public IActionResult OnPostAddMagnet()
+    {
+       return RedirectToPage("StreamMagnet", MagnetUrl);
     }
     public async Task<IActionResult> OnPostDeleteAsync(Guid id)
     {
