@@ -1,19 +1,30 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Torrent Streamer";
+    ViewData["Title"] = "Home||Torrent Streamer";
 }
- <header class="d-flex justify-content-center mt-5">
-<form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
-  <div class="form-group">
-    <input type="file" name="torrentFile" accept=".torrent" />
-    <button type="submit" class="btn btn-primary">Upload</button>
-  </div>
-</form>
+<header class="d-flex justify-content-center mt-5">
+    <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+        <div class="form-group">
+            <input type="file" name="torrentFile" accept=".torrent" />
+            <button type="submit" class="btn btn-primary">Get Started</button>
+        </div>
+    </form>
 </header>
+<div class="container mt-3">
+    @foreach (var item in Model.ModelState.Where(me => me.Key == "torrentFile").Select(me => me.Value).SelectMany(e => e.Errors).Distinct())
+    {
+       @* <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @item.ErrorMessage
+            <button type="button" onclick="()=>closeAlerts()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>*@
+    }
+</div>
 <main>
-  <div id="resultsContainer" class="container mt-3"></div>
-  <section id="playerContainer" class="container mt-3" style="display: none;">
-    <video id="player" controls class="w-100"></video>
-  </section>
+    <div id="resultsContainer" class="container mt-3"></div>
+    <section id="playerContainer" class="container mt-3" style="display: none;">
+        <video id="player" controls class="w-100"></video>
+    </section>
 </main>

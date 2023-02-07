@@ -18,20 +18,20 @@ public class IndexModel : PageModel
     }
     public async Task<IActionResult> OnPostUploadAsync(IFormFile torrentFile)
     {
-     if (torrentFile == null || torrentFile.Length == 0)
-  {
-    ModelState.AddModelError("torrentFile", "No torrent file was uploaded");
-    return Page();
-  }
+        if (torrentFile == null || torrentFile.Length == 0)
+        {
+            ModelState.AddModelError("torrentFile", "No torrent file was uploaded");
+            return Page();
+        }
 
-  // Save the torrent file to the server
-  var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "torrents", torrentFile.FileName);
-  using (var fileStream = new FileStream(filePath, FileMode.Create))
-  {
-    await torrentFile.CopyToAsync(fileStream);
-  }
+        // Save the torrent file to the server
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "torrents", torrentFile.FileName);
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await torrentFile.CopyToAsync(fileStream);
+        }
 
-  return Page();
+        return Page();
     }
 
 }
