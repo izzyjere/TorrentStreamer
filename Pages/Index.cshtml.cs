@@ -6,10 +6,11 @@ namespace TorrentStreamer.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(ILogger<IndexModel> logger)
+    private readonly TorrentContext db;
+    public IndexModel(ILogger<IndexModel> logger, TorrentContext db)
     {
         _logger = logger;
+        this.db = db;
     }
 
     public void OnGet()
@@ -30,7 +31,14 @@ public class IndexModel : PageModel
         {
             await torrentFile.CopyToAsync(fileStream);
         }
-
+        var file = new TorrentFile()
+        {
+            FileName = torrentFile.FileName,           
+            FileSize = torrentFile.Length,
+            DateAdded = DateTime.Now
+        };
+        db.TorrentFiles.Add(file);
+        await db.SaveChangesAsync();
         return Page();
     }
 

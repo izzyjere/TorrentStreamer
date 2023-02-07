@@ -3,26 +3,29 @@
 @{
     ViewData["Title"] = "File History||Torrent Streamer";
 }
-<table class="table table-hover table-striped">
-    <thead>
-        <tr>
-            <th>File Name</th>
-            <th>File Size</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var file in Model.TorrentFiles)
-        {
+<form method="post">
+    <table class="table table-hover table-striped">
+        <thead>
             <tr>
-                <td>@file.Name</td>
-                <td>@file.Length</td>
-                <td>
-                    <button class="btn btn-primary">Stream</button>
-                    <button class="btn btn-danger">Delete</button>
-                </td>
+                <th>File Name</th>
+                <th>Date Added</th>
+                <th>File Size</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var file in Model.TorrentFiles)
+            {
+                <tr>
+                    <td>@file.FileName</td>
+                    <td>@file.DateAdded.ToString("dd/MM/yyyy H:mm")</td>
+                    <td>@file.FileSize</td>
+                    <td>
+                        <button class="btn btn-primary">Stream</button>
+                        <button type="submit" class="btn btn-danger" asp-page-handler="Delete" asp-route-id="@file.Id">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
