@@ -1,6 +1,5 @@
 ﻿var client;
-function getMagnet(magnetLink) {
-    console.log("Clicked");
+function getMagnet(magnetLink) {  
     $(document).ready(function () {
         client = new WebTorrent();
         if (magnetLink != '') {
@@ -27,6 +26,7 @@ function fetchTorrentFile(id) {
 
 function displayTorrentFiles(torrent) {
     var tableBody = $('#torrent-table-body');
+    $("#table-header").text("Torrent: " + torrent.name);
     tableBody.empty();
 
     if (torrent.files.length === 0) {
@@ -40,7 +40,7 @@ function displayTorrentFiles(torrent) {
         row.append("<td>" + file.length + "</td>");
         var actionsCol = $("<td></td>");
         var downloadBtn = $("<button class='btn btn-primary btn-sm mr-1'>Download</button>");
-        var streamBtn = $("<button class='btn btn-primary btn-sm'>Stream</button>");
+        var streamBtn = $("<button class='btn btn-danger btn-sm'>Stream</button>");        
         downloadBtn.click(function () {
             downloadFile(file, torrent);
         });
@@ -52,6 +52,7 @@ function displayTorrentFiles(torrent) {
         row.append(actionsCol);
         tableBody.append(row);
     });
+ 
 }
 
 

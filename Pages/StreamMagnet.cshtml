@@ -5,16 +5,11 @@
 }
 <section class="ftco-section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 mb-5">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar"></div>
-                </div>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-md-12">
-                <button onclick="getMagnet('@Model.MagnetUrl')" class="btn btn-success mb-4">Display Files</button>
+                <h4 id="table-header" class="text-center mb-4"></h4>
+                <button onclick="getMagnet('@Model.MagnetUrl')" class="btn btn-success mb-4">Load Torrent.</button>
                 <div id="torrent-files">
                     <div class="table-wrap">
                         <table class="table">
