@@ -50,5 +50,15 @@ body {
 .form-control {
   padding-right: 3.5rem;
 }
+.progress {
+    height: 20px;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #007bff;
+}
 
 

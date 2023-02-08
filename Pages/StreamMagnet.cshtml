@@ -6,18 +6,31 @@
 <section class="ftco-section">
     <div class="container">
         <div class="row">
+            <div class="col-md-12 mb-5">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <button onclick="getMagnet('@Model.MagnetUrl')" class="btn btn-success mb-4">Display Files</button>
                 <div id="torrent-files">
                     <div class="table-wrap">
                         <table class="table">
-                            <thead class="thead-info">
+                            <colgroup>
+                                <col width="50%"/>
+                                <col width="15%"/>
+                                <col width="20%"/>
+                            </colgroup>
+                            <thead class="thead-primary">
                                 <tr>
                                     <th>File Name</th>
                                     <th>File Size</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="torrent-files-body">
+                            <tbody id="torrent-table-body">
                             </tbody>
                         </table>
                     </div>

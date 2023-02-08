@@ -1,15 +1,14 @@
-﻿
+﻿var client;
 function getMagnet(magnetLink) {
-    console.log("Cliecked");
+    console.log("Clicked");
     $(document).ready(function () {
-        var client = new WebTorrent();
+        client = new WebTorrent();
         if (magnetLink != '') {
             client.add(magnetLink, function (torrent) {
                 displayTorrentFiles(torrent);
             });
         }
-    }); 
-   
+    });
 }
 
 function fetchTorrentFile(id) {
@@ -18,51 +17,67 @@ function fetchTorrentFile(id) {
         type: "GET",
         success: function (data) {
             var torrentFile = new Blob([data], { type: 'application/x-bittorrent' });
-            var client = new WebTorrent();
-            client.add(torrentFile, function (torrent) {
+            client = new WebTorrent();
+            client.seed(torrentFile, function (torrent) {
                 displayTorrentFiles(torrent);
             });
         }
     });
 }
 
-async function displayTorrentFiles(torrent) {
-    console.log("Received torrent.");
-    const files = await Promise.all(torrent.files.map(async file => {
-        return {
-            name: file.name,
-            url: file.getBlobURL()
-        };
-    }));
+function displayTorrentFiles(torrent) {
+    var tableBody = $('#torrent-table-body');
+    tableBody.empty();
 
-    // Clear any existing files from the table
-    const tableBody = document.getElementById("torrent-files-body");
-    tableBody.innerHTML = "";
+    if (torrent.files.length === 0) {
+        tableBody.append("<tr><td colspan='3'>No Files in Torrent</td></tr>");
+        return;
+    }
 
-    // Add the new files to the table
-    files.forEach(file => {
-        const row = document.createElement("tr");
-
-        const nameCell = document.createElement("td");
-        nameCell.textContent = file.name;
-        row.appendChild(nameCell);
-
-        const urlCell = document.createElement("td");
-        const link = document.createElement("a");
-        link.href = file.url;
-        link.textContent = file.url;
-        urlCell.appendChild(link);
-        row.appendChild(urlCell);
-
-        tableBody.appendChild(row);
+    torrent.files.forEach(function (file) {
+        var row = $("<tr></tr>");
+        row.append("<td>" + file.name + "</td>");
+        row.append("<td>" + file.length + "</td>");
+        var actionsCol = $("<td></td>");
+        var downloadBtn = $("<button class='btn btn-primary btn-sm mr-1'>Download</button>");
+        var streamBtn = $("<button class='btn btn-primary btn-sm'>Stream</button>");
+        downloadBtn.click(function () {
+            downloadFile(file, torrent);
+        });
+        streamBtn.click(function () {
+            streamFile(file, torrent);
+        });
+        actionsCol.append(downloadBtn);
+        actionsCol.append(streamBtn);
+        row.append(actionsCol);
+        tableBody.append(row);
     });
 }
+
+
+
+function downloadFile(file, torrent) {
+    console.log("Downloding: " + file.name + " is array:" + Array.isArray(torrent.files));
+    file.getBlobURL(function (err, url) {
+        if (err) throw err
+        var a = document.createElement('a')
+        a.download = file.name
+        a.href = url
+        a.click()
+    });
+}
+ 
+
+function streamFile(file,torrent) {
+    // Add code to stream the file here
+}
+
 
 async function displayTorrent(fileName) {
 
     $(document).ready(function () {
         fetchTorrentFile(fileName);
-    }); 
+    });
 }
 function encode(input) {
     var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
