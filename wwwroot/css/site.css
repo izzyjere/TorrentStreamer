@@ -50,15 +50,31 @@ body {
 .form-control {
   padding-right: 3.5rem;
 }
+#download-progress-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+#download-progress-header {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#download-progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .progress {
     height: 20px;
-    margin-top: 20px;
 }
 
 .progress-bar {
-    height: 100%;
-    width: 0%;
     background-color: #007bff;
 }
-
 

@@ -35,9 +35,10 @@ function displayTorrentFiles(torrent) {
     }
 
     torrent.files.forEach(function (file) {
+
         var row = $("<tr></tr>");
         row.append("<td>" + file.name + "</td>");
-        row.append("<td>" + file.length + "</td>");
+        row.append("<td>" + getFileSize(file.length) + "</td>");
         var actionsCol = $("<td></td>");
         var downloadBtn = $("<button class='btn btn-primary btn-sm mr-1'>Download</button>");
         var streamBtn = $("<button class='btn btn-danger btn-sm'>Stream</button>");        
@@ -55,10 +56,24 @@ function displayTorrentFiles(torrent) {
  
 }
 
-
+function getFileSize(size) {
+    var kbs = size / 1024;
+    if (kbs >= 1000) {
+        return (kbs / 1024).toFixed(1) + ' mb';
+    }
+    return kbs.toFixed(1) + ' kb';
+}
 
 function downloadFile(file, torrent) {
     console.log("Downloding: " + file.name + " is array:" + Array.isArray(torrent.files));
+    const fileSize = file.length;
+    torrent.on('download', function (bytes) {
+        
+        const percent = (bytes / fileSize * 100).toFixed(2);
+        console.log(percent);
+        $("#download-progress").css("width", percent + "%");
+        $("#download-progress").attr("aria-valuenow", percent);
+    });
     file.getBlobURL(function (err, url) {
         if (err) throw err
         var a = document.createElement('a')
@@ -66,6 +81,10 @@ function downloadFile(file, torrent) {
         a.href = url
         a.click()
     });
+
+    $("#download-progress-container").show();
+    $("#download-file-name").text(file.name);  
+ 
 }
  
 
@@ -79,27 +98,4 @@ async function displayTorrent(fileName) {
     $(document).ready(function () {
         fetchTorrentFile(fileName);
     });
-}
-function encode(input) {
-    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    var output = "";
-    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-    var i = 0;
-    while (i < input.length) {
-        chr1 = input[i++];
-        chr2 = i < input.length ? input[i++] : Number.NaN;
-        chr3 = i < input.length ? input[i++] : Number.NaN;
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
-        if (isNaN(chr2)) {
-            enc3 = enc4 = 64;
-        } else if (isNaN(chr3)) {
-            enc4 = 64;
-        }
-        output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
-            keyStr.charAt(enc3) + keyStr.charAt(enc4);
-    }
-    return output;
 }
